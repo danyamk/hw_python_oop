@@ -52,7 +52,7 @@ class CashCalculator(Calculator):
         if currency == 'rub':
             currency = 'руб'
         elif currency == 'usd':
-            currency = 'USD' 
+            currency = 'USD'
             remains *= self.USD_RATE
         elif currency == 'eur':
             currency = 'Euro'
@@ -61,7 +61,7 @@ class CashCalculator(Calculator):
         if remains > 0:
             return f'На сегодня осталось {round(remains, 2)} {currency}'
         else:
-            return ('Денег нет, держись: твой долг -' 
+            return ('Денег нет, держись: твой долг -'
                     f'{abs(round(remains, 2))} {currency}')
 
 
@@ -78,10 +78,10 @@ class CaloriesCalculator(Calculator):
                 total += record.amount
         if total < self.limit:
             remains = self.limit - total
-            return (f'Сегодня можно съесть что-нибудь ещё, ' 
+            return ('Сегодня можно съесть что-нибудь ещё, '
                     f'но с общей калорийностью не более {remains} кКал')
         else:
-            return (f'Хватит есть!')
+            return ('Хватит есть!')
 
 
 # создадим калькулятор денег с дневным лимитом 1000
