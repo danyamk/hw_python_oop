@@ -4,19 +4,19 @@ import datetime as dt
 class Calculator:
     def __init__(self, limit: float):
         self.limit = limit
-        self.current_date=dt.date.today()
-        self.records=[]
+        self.current_date = dt.date.today()
+        self.records = []
 
     def add_record(self, Record):
-            self.records.append(Record)
+        self.records.append(Record)
 
     def get_today_stats(self):
-            today_status = 0
-            for record in self.records:
-                if record.date == self.current_date:
-                    today_status += record.amount
-            return today_status
-        
+        today_status = 0
+        for record in self.records:
+            if record.date == self.current_date:
+                today_status += record.amount
+        return today_status
+
     def get_week_stats(self):
         sum: float = 0
         week_ago = self.current_date - dt.timedelta(days=7)
@@ -27,7 +27,7 @@ class Calculator:
 
 
 class Record:
-    def __init__(self, amount, comment, date:str = None):
+    def __init__(self, amount, comment, date: str = None):
         self.amount = amount
         self.comment = comment
         if date is None:
@@ -38,9 +38,9 @@ class Record:
 
 
 class CashCalculator(Calculator):
-    USD_RATE = 1/73.15
-    EURO_RATE = 1/86.81
-    
+    USD_RATE = 1 / 73.15
+    EURO_RATE = 1 / 86.81
+
     def __init__(self, limit: float):
         super().__init__(limit)
 
@@ -61,8 +61,10 @@ class CashCalculator(Calculator):
         if remains > 0:
             return f'На сегодня осталось {round(remains, 2)} {currency}'
         else:
-            return f'Денег нет, держись: твой долг - {abs(round(remains, 2))} {currency}'
-            
+            return ('Денег нет, держись: твой долг -' 
+                    f'{abs(round(remains, 2))} {currency}')
+
+
 class CaloriesCalculator(Calculator):
     def __init__(self, limit: float):
         super().__init__(limit)
@@ -82,7 +84,6 @@ class CaloriesCalculator(Calculator):
             return (f'Хватит есть!')
 
 
-
 # создадим калькулятор денег с дневным лимитом 1000
 cash_calculator = CashCalculator(-1)
 
@@ -100,4 +101,3 @@ cash_calculator.add_record(Record(amount=3000,
 print(cash_calculator.get_today_cash_remained('usd'))
 # должно напечататься
 # На сегодня осталось 555 руб
-
