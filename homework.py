@@ -27,7 +27,7 @@ class Calculator:
 
 
 class Record:
-    def __init__(self, amount: float, comment: str, date = None):
+    def __init__(self, amount: float, comment: str, date=None):
         self.amount = amount
         self.comment = comment
         if date is None:
