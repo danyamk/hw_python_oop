@@ -27,7 +27,7 @@ class Calculator:
 
 
 class Record:
-    def __init__(self, amount, comment, date: str = None):
+    def __init__(self, amount: float, comment: str, date = None):
         self.amount = amount
         self.comment = comment
         if date is None:
@@ -38,8 +38,8 @@ class Record:
 
 
 class CashCalculator(Calculator):
-    USD_RATE = 1 / 73.15
-    EURO_RATE = 1 / 86.81
+    USD_RATE = 73.15
+    EURO_RATE = 86.81
 
     def __init__(self, limit: float):
         super().__init__(limit)
@@ -53,15 +53,14 @@ class CashCalculator(Calculator):
             currency = 'руб'
         elif currency == 'usd':
             currency = 'USD'
-            remains *= self.USD_RATE
+            remains /= self.USD_RATE
         elif currency == 'eur':
             currency = 'Euro'
-            remains *= self.EURO_RATE
-        print(remains)
+            remains /= self.EURO_RATE
         if remains > 0:
             return f'На сегодня осталось {round(remains, 2)} {currency}'
         else:
-            return ('Денег нет, держись: твой долг -'
+            return ('Денег нет, держись: твой долг - '
                     f'{abs(round(remains, 2))} {currency}')
 
 
@@ -70,8 +69,6 @@ class CaloriesCalculator(Calculator):
         super().__init__(limit)
 
     def get_calories_remained(self):
-        if self.limit == -1 or self.limit == 0:
-            pass
         total = 0
         for record in self.records:
             if record.date == self.current_date:
@@ -85,7 +82,7 @@ class CaloriesCalculator(Calculator):
 
 
 # создадим калькулятор денег с дневным лимитом 1000
-cash_calculator = CashCalculator(-1)
+cash_calculator = CashCalculator(1)
 
 # дата в параметрах не указана,
 # так что по умолчанию к записи
@@ -98,6 +95,6 @@ cash_calculator.add_record(Record(amount=3000,
                                   comment='бар в Танин др',
                                   date='10.08.2021'))
 
-print(cash_calculator.get_today_cash_remained('usd'))
+print(cash_calculator.get_today_cash_remained('eur'))
 # должно напечататься
 # На сегодня осталось 555 руб
