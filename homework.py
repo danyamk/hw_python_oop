@@ -22,12 +22,12 @@ class Calculator:
         self.records.append(Record)
 
     def get_today_stats(self):
-        return sum(record.amount for record in self.records 
-            if record.date == self.current_date)
+        return sum(record.amount for record in self.records
+                   if record.date == self.current_date)
 
     def get_week_stats(self):
         return sum(record.amount for record in self.records
-            if self.current_date >= record.date >= self.week_ago)
+                   if self.current_date >= record.date >= self.week_ago)
 
     def get_remains(self):
         return self.limit - self.get_today_stats()
@@ -86,8 +86,8 @@ if __name__ == "__main__":
     cash_calculator.add_record(Record(amount=300, comment='Серёге за обед'))
     # а тут пользователь указал дату, сохраняем её
     cash_calculator.add_record(Record(amount=3000,
-                                    comment='бар в Танин др',
-                                    date='10.08.2021'))
+                                      comment='бар в Танин др',
+                                      date='10.08.2021'))
 
     print(cash_calculator.get_today_cash_remained('eur'))
     # должно напечататься
