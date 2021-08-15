@@ -23,12 +23,12 @@ class Calculator:
 
     def get_today_stats(self):
         return sum(record.amount for record in self.records 
-                if record.date == self.current_date)
+            if record.date == self.current_date)
 
     def get_week_stats(self):
         return sum(record.amount for record in self.records
-                if self.current_date >= record.date >= self.week_ago)
-    
+            if self.current_date >= record.date >= self.week_ago)
+
     def get_remains(self):
         return self.limit - self.get_today_stats()
 
@@ -43,7 +43,7 @@ class CashCalculator(Calculator):
 
     def get_today_cash_remained(self, currency):
         remains = self.get_remains()
-        if remains is 0:
+        if remains == 0:
             return('Денег нет, держись')
         db_currency = {
             "rub": ("руб", self.RUB_RATE),
@@ -52,7 +52,7 @@ class CashCalculator(Calculator):
         }
         if currency in db_currency:
             currency, rate = db_currency[currency]
-            remains = round(remains/rate, 2)
+            remains = round(remains / rate, 2)
             remains_abs = abs(remains)
             if remains > 0:
                 return f'На сегодня осталось {round(remains, 2)} {currency}'
@@ -67,11 +67,12 @@ class CaloriesCalculator(Calculator):
 
     def get_calories_remained(self):
         remains = self.get_remains()
-        if self.get_today_stats() < self.limit: 
+        if self.get_today_stats() < self.limit:
             return ('Сегодня можно съесть что-нибудь ещё, '
                     f'но с общей калорийностью не более {remains} кКал')
         else:
             return ('Хватит есть!')
+
 
 if __name__ == "__main__":
     # создадим калькулятор денег с дневным лимитом 1000
