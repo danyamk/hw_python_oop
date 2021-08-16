@@ -40,7 +40,7 @@ class CashCalculator(Calculator):
 
     def get_today_cash_remained(self, currency):
         remains = self.get_remains()
-        if remains is 0:
+        if remains == 0:
             return('Денег нет, держись')
         db_currency = {
             "rub": ("руб", self.RUB_RATE),
