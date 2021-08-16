@@ -18,8 +18,8 @@ class Calculator:
         self.records = []
         self.week_ago = self.current_date - dt.timedelta(days=7)
 
-    def add_record(self, Record):
-        self.records.append(Record)
+    def add_record(self, record: Record):
+        self.records.append(record)
 
     def get_today_stats(self):
         return sum(record.amount for record in self.records
@@ -27,7 +27,7 @@ class Calculator:
 
     def get_week_stats(self):
         return sum(record.amount for record in self.records
-                   if self.current_date >= record.date >= self.week_ago)
+                   if self.current_date >= record.date > self.week_ago)
 
     def get_remains(self):
         return self.limit - self.get_today_stats()
@@ -38,12 +38,9 @@ class CashCalculator(Calculator):
     EURO_RATE = 86.81
     RUB_RATE = 1
 
-    def __init__(self, limit: float):
-        super().__init__(limit)
-
     def get_today_cash_remained(self, currency):
         remains = self.get_remains()
-        if remains == 0:
+        if remains is 0:
             return('Денег нет, держись')
         db_currency = {
             "rub": ("руб", self.RUB_RATE),
@@ -59,11 +56,11 @@ class CashCalculator(Calculator):
             else:
                 return ('Денег нет, держись: твой долг - '
                         f'{remains_abs} {currency}')
+        else:
+            return 'Нет такой валюты'
 
 
 class CaloriesCalculator(Calculator):
-    def __init__(self, limit: float):
-        super().__init__(limit)
 
     def get_calories_remained(self):
         remains = self.get_remains()
